@@ -23,7 +23,11 @@ def main():
     parser.add_argument("word", help="Display information for this word", type=str)
     args = parser.parse_args()
 
-    vocabulary_dot_com = urllib2.urlopen("http://vocabulary.com/dictionary/" + args.word)
+    try:
+        vocabulary_dot_com = urllib2.urlopen("http://vocabulary.com/dictionary/" + args.word)
+    except:
+        print "Please check your internet connection\n"
+        return
     soup = BeautifulSoup(vocabulary_dot_com, "lxml")
     usage = soup.find_all('p', attrs = {'class': 'short'})
     if usage:
